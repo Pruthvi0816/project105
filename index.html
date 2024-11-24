@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="index2.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Resources Sharing Platform by PK</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <header>
+     <center>   <h1>Study Resources Sharing Platform  DHARASHIV </h1> </center>
+    </header>
+    <main>
+        <body>
+           <center> <h1>Enter Your Location</h1> </center>
+            <form
+                <div class="form-group">
+                    <label for="manual-location">Location (City, Village , Collage name)</label>
+                    <input type="text" id="manual-location" name="manual-location" placeholder="Enter your location manually">
+                </div>
+                <button type="button" class="btn" onclick="getLocation()">Use Current Location</button>
+            </form>
+        
+            <div class="location-info" id="location-info">
+                <!-- Geolocation information will be displayed here -->
+            </div>
+        
+            <script>
+                // Function to get the user's location
+                function getLocation() {
+                    const locationInfo = document.getElementById("location-info");
+        
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                const latitude = position.coords.latitude;
+                                const longitude = position.coords.longitude;
+                                locationInfo.innerHTML = `
+                                    <p><strong>Your Current Location:</strong></p>
+                                    <p>Latitude: ${latitude}</p>
+                                    <p>Longitude: ${longitude}</p>
+                                `;
+                                // Optionally: Send latitude/longitude to a server or convert to a human-readable address using APIs
+                            },
+                            (error) => {
+                                locationInfo.innerHTML = "<p style='color: red;'>Unable to fetch location. Please enter manually.</p>";
+                            }
+                        );
+                    } else {
+                        locationInfo.innerHTML = "<p style='color: red;'>Geolocation is not supported by your browser.</p>";
+                    }
+                }
+            </script>
+        </body>
+        <div class="container">
+            <!-- Upload Form -->
+            <h2>Upload Study Material</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Resource Title</label>
+                    <input type="text" id="title" name="title" placeholder="Enter resource title" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="math">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="history">History</option>
+                        <option value="BCA"> BCA notes sem 1 to 6th  </option>
+                        <option value="BCA Question placeholder"> BCA PYQ</option>
+                        <option value="literature">Literature</option>
+                        <!-- Add more subjects as needed -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="file">Upload File (PDF, Notes, or Video)</label>
+                    <input type="file" id="file" name="file" accept=".pdf, .docx, .mp4, .zip" required>
+                </div>
+                <button type="submit" class="btn">Upload</button>
+            </form>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <h2>Search Resources</h2>
+                <input type="text" id="search" name="search" placeholder="Search by title or subject...">
+            </div>
+
+            <!-- Resources List -->
+            <h2>Available Resources</h2>
+            <div class="resource">
+                <h3>Linear Algebra Notes</h3>
+                <p><strong>Subject:</strong> Mathematics</p>
+                <a href="/downloads/linear-algebra-notes.pdf" class="btn" download>Download</a>
+                <button class="vote-btn">👍 15 Votes</button>
+            </div>
+            <div class="resource">
+                <h3>Organic Chemistry Video</h3>
+                <p><strong>Subject:</strong> Science</p>
+                <a href="/downloads/organic-chemistry.mp4" class="btn" download>Download</a>
+                <button class="vote-btn">👍 20 Votes</button>
+            </div>
+            <!-- Add more resource entries dynamically -->
+        </div>
+    </main>
+</body>
+</html>
